@@ -1,1 +1,827 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia Visual de Redes para Automação</title>
+
+<style>
+:root {
+  --bg: #0b1220;
+  --panel: #111c2d;
+  --panel2: #172337;
+  --cyan: #06b6d4;
+  --cyan-light: #67e8f9;
+  --green: #4ade80;
+  --purple: #6d28d9;
+  --text: #e5edf7;
+  --muted: #9aabc0;
+  --border: #334155;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.hero {
+  background: var(--panel);
+  padding: 35px 6%;
+  border-bottom: 1px solid #26364b;
+}
+
+.status {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.hero-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.hero h1 {
+  font-size: clamp(25px, 4vw, 40px);
+  margin: 15px 0;
+}
+
+.version {
+  background: var(--purple);
+  border: 1px solid #a78bfa;
+  border-radius: 30px;
+  padding: 8px 13px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.hero p {
+  color: #aebed1;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1120px;
+  margin: auto;
+  padding: 30px 22px 60px;
+}
+
+.tabs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 15px;
+  margin-bottom: 28px;
+}
+
+.tab, .choice {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: .2s;
+}
+
+.tab:hover, .choice:hover {
+  border-color: var(--cyan);
+}
+
+.tab.active, .choice.active {
+  background: #083344;
+  border-color: var(--cyan);
+  color: var(--cyan-light);
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.section-title h2 {
+  margin-bottom: 8px;
+}
+
+.section-title p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.cable-card {
+  min-height: 145px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  transition: .2s;
+}
+
+.cable-card:hover {
+  border-color: var(--cyan);
+  transform: translateY(-3px);
+}
+
+.cable-card.active {
+  border-color: var(--cyan);
+  box-shadow: 0 0 15px #06b6d433;
+}
+
+.cable-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: #083344;
+  border-radius: 14px;
+  color: var(--cyan-light);
+  font-size: 27px;
+}
+
+.detail {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  padding: 24px;
+  margin-top: 22px;
+  background: var(--panel);
+  border: 1px solid var(--cyan);
+  border-radius: 16px;
+  box-shadow: 0 0 20px #0891b21a;
+  animation: appear .3s ease;
+}
+
+.detail img {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  max-height: 340px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.detail-content {
+  padding: 10px 15px 10px 0;
+}
+
+.detail-content h3 {
+  font-size: 25px;
+  margin: 12px 0;
+}
+
+.detail-content p {
+  color: #c5d2e2;
+  line-height: 1.7;
+}
+
+.close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 35px;
+  height: 35px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #1e293b;
+  color: white;
+  font-size: 23px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.tag {
+  background: #172f45;
+  border: 1px solid #25617b;
+  color: var(--cyan-light);
+  padding: 8px 11px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.topology-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.choice {
+  min-width: 210px;
+  padding: 17px;
+}
+
+.topology-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 18px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.panel h3 {
+  margin-top: 0;
+}
+
+.panel svg {
+  width: 100%;
+  height: auto;
+}
+
+.node {
+  fill: #123047;
+  stroke: var(--cyan);
+  stroke-width: 2;
+}
+
+.wire {
+  stroke: var(--cyan);
+  stroke-width: 4;
+  fill: none;
+}
+
+svg text {
+  fill: var(--text);
+  font-size: 13px;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+.panel ul {
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+.panel li {
+  color: #c5d2e2;
+  margin: 8px 0;
+}
+
+.notice {
+  margin-top: 24px;
+  padding: 16px;
+  background: #14263a;
+  border-left: 4px solid var(--cyan);
+  border-radius: 0 12px 12px 0;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+.footer {
+  border-top: 1px solid var(--border);
+  margin-top: 35px;
+  padding-top: 20px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media(max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail,
+  .topology-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-content {
+    padding: 5px;
+  }
+
+  .hero {
+    padding: 25px 20px;
+  }
+
+  .container {
+    padding: 22px 15px;
+  }
+
+  .choice {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+  <div class="status">● SISTEMA ONLINE • AUTOMAÇÃO INDUSTRIAL</div>
+
+  <div class="hero-title">
+    <h1>Guia Visual de Redes para Automação</h1>
+    <span class="version">Versão v6</span>
+  </div>
+
+  <p>
+    Explore os meios físicos de comunicação e visualize como os
+    equipamentos são interligados em redes industriais.
+  </p>
+</header>
+
+<main class="container">
+
+<nav class="tabs">
+  <button class="tab active" data-tab="cables">
+    🔌 Meios Físicos (Cabos)
+  </button>
+
+  <button class="tab" data-tab="topologies">
+    📐 Simulador de Topologia
+  </button>
+</nav>
+
+<!-- ABA 1: CABOS -->
+
+<section id="cables">
+
+  <div class="section-title">
+    <div class="eyebrow">PARTE 01</div>
+    <h2>Meios Físicos de Comunicação</h2>
+    <p>Selecione um cabo para visualizar suas características técnicas.</p>
+  </div>
+
+  <div class="grid">
+
+    <button class="cable-card" data-cable="twisted">
+      <span class="cable-icon">⌁</span>
+      <strong>Par Trançado</strong>
+    </button>
+
+    <button class="cable-card" data-cable="fiber">
+      <span class="cable-icon">✧</span>
+      <strong>Fibra Óptica</strong>
+    </button>
+
+    <button class="cable-card" data-cable="rs485">
+      <span class="cable-icon">⎓</span>
+      <strong>Cabo RS-485</strong>
+    </button>
+
+  </div>
+
+  <div class="detail hidden" id="cableDetail">
+
+    <button class="close" id="closeCable">×</button>
+
+    <img id="cableImage" src="" alt="Imagem do cabo industrial">
+
+    <div class="detail-content">
+
+      <div class="eyebrow" id="cableTag"></div>
+
+      <h3 id="cableTitle"></h3>
+
+      <p id="cableDescription"></p>
+
+      <div class="tags" id="cableBadges"></div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ABA 2: TOPOLOGIAS -->
+
+<section id="topologies" class="hidden">
+
+  <div class="section-title">
+    <div class="eyebrow">PARTE 02</div>
+    <h2>Simulador de Topologias</h2>
+    <p>
+      Escolha uma topologia e observe como os equipamentos
+      são conectados.
+    </p>
+  </div>
+
+  <div class="topology-controls">
+
+    <button class="choice active" data-topology="bus">
+      ▰ Layout em Barramento
+    </button>
+
+    <button class="choice" data-topology="star">
+      ✣ Layout em Estrela
+    </button>
+
+  </div>
+
+  <div class="topology-grid">
+
+    <div class="panel">
+
+      <h3 id="topoTitle">Topologia em Barramento</h3>
+
+      <svg id="topoSvg" viewBox="0 0 520 310">
+
+        <path class="wire" d="M45 155 H475"/>
+
+        <g class="wire">
+          <path d="M105 155 V85 M260 155 V85 M415 155 V85"/>
+        </g>
+
+        <g class="node">
+          <rect x="55" y="35" width="100" height="50" rx="10"/>
+          <rect x="210" y="35" width="100" height="50" rx="10"/>
+          <rect x="365" y="35" width="100" height="50" rx="10"/>
+        </g>
+
+        <g>
+          <text x="105" y="65">CLP 1</text>
+          <text x="260" y="65">IHM</text>
+          <text x="415" y="65">CLP 2</text>
+          <text x="260" y="205">CABO PRINCIPAL</text>
+        </g>
+
+      </svg>
+
+      <p id="diagramCaption" style="color:var(--muted)">
+        Todos os dispositivos compartilham o mesmo caminho principal.
+      </p>
+
+    </div>
+
+    <div class="panel">
+
+      <h3>Como funciona?</h3>
+
+      <p id="topoDescription" style="color:var(--muted);line-height:1.7">
+        Os dispositivos compartilham um mesmo meio de comunicação principal.
+      </p>
+
+      <h3>Vantagens</h3>
+      <ul id="topoAdvantages"></ul>
+
+      <h3>Desvantagens</h3>
+      <ul id="topoDisadvantages"></ul>
+
+    </div>
+
+  </div>
+
+  <div class="notice" id="topoNotice"></div>
+
+</section>
+
+<div class="notice">
+  <strong>Conectando com a teoria:</strong>
+  Meios físicos são os caminhos utilizados para transmitir dados.
+  Topologia é a forma como os dispositivos de uma rede são interligados.
+</div>
+
+<footer class="footer">
+  Material didático introdutório • Guia Visual de Redes para Automação
+</footer>
+
+</main>
+
+<script>
+
+// DADOS DOS CABOS
+
+const cableData = {
+
+  twisted: {
+    tag: "ETHERNET / PROFINET",
+    title: "Par Trançado",
+    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&h=400&q=80",
+    description: "Cabo de rede comum (Ethernet/Profinet). Usado para ligar o CLP ao computador do supervisor, além de conectar switches e IHMs.",
+    badges: [
+      "Custo: Baixo",
+      "Flexibilidade: Alta",
+      "Distância: Máx. 100m"
+    ]
+  },
+
+  fiber: {
+    tag: "TRANSMISSÃO ÓPTICA",
+    title: "Fibra Óptica",
+    image: "https://images.unsplash.com/photo-1601524909162-be87252be298?auto=format&fit=crop&w=600&h=400&q=80",
+    description: "Cabo de filamentos de vidro. Usado para levar dados a longas distâncias na fábrica e interligar blocos industriais sem sofrer interferência eletromagnética de grandes motores.",
+    badges: [
+      "Imunidade a Ruídos: Excelente",
+      "Custo: Alto",
+      "Banda: Gigabit+"
+    ]
+  },
+
+  rs485: {
+    tag: "COMUNICAÇÃO SERIAL",
+    title: "Cabo RS-485",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&h=400&q=80",
+    description: "Cabo de dois fios trançados com blindagem malhada (A e B). Padrão físico indispensável na indústria para comunicação serial robusta entre CLPs, inversores de frequência e instrumentos de campo.",
+    badges: [
+      "Protocolos: Modbus RTU / Profibus DP",
+      "Distância: até 1200m",
+      "Topologia: Barramento"
+    ]
+  }
+
+};
+
+// ELEMENTOS DA PÁGINA
+
+const cableDetail = document.getElementById("cableDetail");
+const cableImage = document.getElementById("cableImage");
+const cableTag = document.getElementById("cableTag");
+const cableTitle = document.getElementById("cableTitle");
+const cableDescription = document.getElementById("cableDescription");
+const cableBadges = document.getElementById("cableBadges");
+
+// SELEÇÃO DOS CABOS
+
+function selectCable(key) {
+
+  const data = cableData[key];
+
+  document.querySelectorAll(".cable-card").forEach(button => {
+    button.classList.toggle("active", button.dataset.cable === key);
+  });
+
+  cableImage.src = data.image;
+  cableImage.alt = "Imagem técnica: " + data.title;
+
+  cableTag.textContent = data.tag;
+  cableTitle.textContent = data.title;
+  cableDescription.textContent = data.description;
+
+  cableBadges.replaceChildren();
+
+  data.badges.forEach(item => {
+    const badge = document.createElement("span");
+    badge.className = "tag";
+    badge.textContent = item;
+    cableBadges.appendChild(badge);
+  });
+
+  cableDetail.classList.remove("hidden");
+}
+
+document.querySelectorAll(".cable-card").forEach(button => {
+  button.addEventListener("click", () => {
+    selectCable(button.dataset.cable);
+  });
+});
+
+// FECHAR PAINEL DE CABOS
+
+document.getElementById("closeCable").addEventListener("click", () => {
+
+  cableDetail.classList.add("hidden");
+
+  document.querySelectorAll(".cable-card").forEach(button => {
+    button.classList.remove("active");
+  });
+
+});
+
+// ALTERNÂNCIA DAS ABAS
+
+document.querySelectorAll(".tab").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.classList.toggle("active", tab === button);
+    });
+
+    document.getElementById("cables").classList.toggle(
+      "hidden",
+      button.dataset.tab !== "cables"
+    );
+
+    document.getElementById("topologies").classList.toggle(
+      "hidden",
+      button.dataset.tab !== "topologies"
+    );
+
+  });
+
+});
+
+// DADOS DAS TOPOLOGIAS
+
+const topoData = {
+
+  bus: {
+
+    title: "Topologia em Barramento",
+
+    description: "Os dispositivos compartilham um mesmo meio de comunicação principal. Os equipamentos são conectados ao longo de uma linha, como vagões de um trem.",
+
+    caption: "Todos os dispositivos compartilham o mesmo caminho principal de comunicação.",
+
+    advantages: [
+      "Pode exigir menos cabo do que uma estrela em instalações simples.",
+      "A estrutura linear pode ser fácil de visualizar."
+    ],
+
+    disadvantages: [
+      "Uma falha no cabo principal pode interromper a comunicação de vários dispositivos.",
+      "O desempenho pode ser afetado pelo tráfego e pelas características do meio compartilhado.",
+      "Exige cuidados de terminação e limites definidos pelo padrão utilizado."
+    ],
+
+    notice: "Se o cabo principal for interrompido, os dispositivos além do ponto da falha podem perder a comunicação."
+
+  },
+
+  star: {
+
+    title: "Topologia em Estrela",
+
+    description: "Todas as máquinas se conectam a um equipamento central, geralmente um switch. O switch encaminha os dados entre os dispositivos.",
+
+    caption: "Cada equipamento possui uma conexão individual com o aparelho central (switch).",
+
+    advantages: [
+      "Se um cabo ou equipamento final falhar, os demais geralmente continuam comunicando.",
+      "Facilita identificar e isolar falhas em um ponto.",
+      "É uma arquitetura comum em redes Ethernet industriais."
+    ],
+
+    disadvantages: [
+      "O switch central é um ponto importante da rede; se falhar, pode afetar todos os equipamentos conectados a ele.",
+      "Exige mais cabos do que uma ligação em linha."
+    ],
+
+    notice: "Se o cabo de comunicação de um equipamento apresentar defeito, os outros equipamentos podem continuar conectados ao switch."
+
+  }
+
+};
+
+// ATUALIZAR LISTAS
+
+function updateList(elementId, items) {
+
+  const list = document.getElementById(elementId);
+
+  list.replaceChildren();
+
+  items.forEach(item => {
+
+    const li = document.createElement("li");
+    li.textContent = item;
+    list.appendChild(li);
+
+  });
+
+}
+
+// DESENHO DAS TOPOLOGIAS
+
+function selectTopology(key) {
+
+  const data = topoData[key];
+
+  document.querySelectorAll(".choice").forEach(button => {
+    button.classList.toggle("active", button.dataset.topology === key);
+  });
+
+  document.getElementById("topoTitle").textContent = data.title;
+
+  document.getElementById("topoDescription").textContent = data.description;
+
+  document.getElementById("diagramCaption").textContent = data.caption;
+
+  updateList("topoAdvantages", data.advantages);
+
+  updateList("topoDisadvantages", data.disadvantages);
+
+  document.getElementById("topoNotice").textContent =
+    "Exemplo: " + data.notice;
+
+  const svg = document.getElementById("topoSvg");
+
+  if (key === "star") {
+
+    svg.innerHTML = `
+      <g class="wire">
+        <path d="M260 145 L110 55 M260 145 L410 55 M260 145 L110 245 M260 145 L410 245"/>
+      </g>
+
+      <g class="node">
+        <rect x="205" y="115" width="110" height="60" rx="12"/>
+        <rect x="55" y="25" width="110" height="55" rx="10"/>
+        <rect x="355" y="25" width="110" height="55" rx="10"/>
+        <rect x="55" y="220" width="110" height="55" rx="10"/>
+        <rect x="355" y="220" width="110" height="55" rx="10"/>
+      </g>
+
+      <g>
+        <text x="260" y="151">SWITCH</text>
+        <text x="110" y="58">CLP 1</text>
+        <text x="410" y="58">IHM</text>
+        <text x="110" y="253">CLP 2</text>
+        <text x="410" y="253">PC</text>
+      </g>
+    `;
+
+  } else {
+
+    svg.innerHTML = `
+      <path class="wire" d="M45 155 H475"/>
+
+      <g class="wire">
+        <path d="M105 155 V85 M260 155 V85 M415 155 V85"/>
+      </g>
+
+      <g class="node">
+        <rect x="55" y="35" width="100" height="50" rx="10"/>
+        <rect x="210" y="35" width="100" height="50" rx="10"/>
+        <rect x="365" y="35" width="100" height="50" rx="10"/>
+      </g>
+
+      <g>
+        <text x="105" y="65">CLP 1</text>
+        <text x="260" y="65">IHM</text>
+        <text x="415" y="65">CLP 2</text>
+        <text x="260" y="205">CABO PRINCIPAL</text>
+      </g>
+    `;
+
+  }
+
+}
+
+// BOTÕES DE TOPOLOGIA
+
+document.querySelectorAll(".choice").forEach(button => {
+
+  button.addEventListener("click", () => {
+    selectTopology(button.dataset.topology);
+  });
+
+});
+
+// INICIALIZAÇÃO
+
+selectTopology("bus");
+
+</script>
+
+</body>
+</html>
+
